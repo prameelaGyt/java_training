@@ -8,7 +8,7 @@
     <artifactId>pronto</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <java.version>21 </java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -26,6 +26,7 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>3.3.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
