@@ -1,29 +1,34 @@
 package org.example.api;
 
 import org.springframework.stereotype.Component;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-import javax.persistence.Entity;
+@Entity
+@Table(name = "user")
+public class User
+{
 
-//@Entity
-//@Component
-public class User {
-
-    private String id;
+    @Id
+    private String uid;
+    //@Column(name = "name")
     private String name;
 
-    public User() {
+    public User() {}
 
-    }
-    public User(String id, String name) {
-        this.id = id;
+    public User(String uid, String name)
+    {
+        this.uid =uid;
         this.name = name;
     }
-    public String getId() {
-        return id;
+    public String getId()
+    {
+        return uid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String uid) {
+        this.uid = uid;
     }
 
     public String getName() {
@@ -36,6 +41,6 @@ public class User {
 
     @Override
     public String toString() {
-        return id + name;
+        return uid + ": " + name;
     }
 }
