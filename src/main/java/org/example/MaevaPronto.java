@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "org.example")
-@EnableJpaRepositories("org.example.api")
-@EntityScan("org.example.api")
+@EnableJpaRepositories(basePackages = {"org.example.api","org.example.api2"})
+@EntityScan(basePackages = {"org.example.api","org.example.api2"})
 public class MaevaPronto
 {
     public static void main(String[] args) {
