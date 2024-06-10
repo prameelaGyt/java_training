@@ -2,6 +2,7 @@ package org.example.api;
 
 import jakarta.persistence.*;
 import org.example.api2.Group;
+import org.example.api3.Practice;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -49,9 +50,15 @@ public class User
         this.name = name;
     }
 
-    public Set<Group> getGroups()
+    public Set<InfoPrac> getGroups()
     {
-        return groups;
+        Set<InfoPrac> groupSet = new HashSet<>();
+        for (Group g : groups)
+        {
+            groupSet.add(new InfoPrac(g.getGid(), g.getName(),g.getPractices()));
+        }
+        return groupSet;
+       // return groups;
     }
 
     public void setGroups(Set<Group> groups) {

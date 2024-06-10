@@ -1,7 +1,9 @@
 package org.example.api2;
 
 import jakarta.persistence.*;
+import org.example.api.Info;
 import org.example.api.User;
+import org.example.api3.Practice;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +19,11 @@ public class Group
 
     @ManyToMany(mappedBy = "groups")
     private Set<User> users=new HashSet<>();
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Practice> practices = new HashSet<>();
+
+
     public Group() {}
     public Group(int gid,String name)
     {
@@ -44,14 +51,34 @@ public class Group
         this.gid = gid;
     }
 
-    public Set<User> getUsers()
+    public Set<Info> getUsers()
     {
-        return users;
+        Set<Info> userSet=new HashSet<>();
+        for(User u: users)
+        {
+            userSet.add(new Info(u.getId(),u.getName()));
+        }
+        return userSet;
     }
 
     public void setUsers(Set<User> users)
     {
         this.users = users;
+    }
+
+    public Set<Info> getPractices()
+    {
+        Set<Info> practiceSet=new HashSet<>();
+        for(Practice p: practices)
+        {
+            practiceSet.add(new Info(p.getId(),p.getName()));
+        }
+        return practiceSet;
+        //return practices;
+    }
+
+    public void setPractices(Set<Practice> practices) {
+        this.practices = practices;
     }
 
     @Override
