@@ -1,7 +1,9 @@
 package org.example.api2;
 
+import org.example.api.InfoPrac;
 import org.example.api.NotFoundException;
 import org.example.api.User;
+import org.example.api.Info;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/groups")
@@ -17,7 +20,7 @@ public class GroupController
     @Autowired
     private GroupService groupService;
     @GetMapping
-    public List<Group> getAllGroups()
+    public Set<Info> getAllGroups()
     {
         return groupService.getAllGroups();
     }
@@ -50,6 +53,20 @@ public class GroupController
         catch(NotFoundException e)
         {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("record not found");
+        }
+    }
+
+    @PostMapping("/batch")
+    public ResponseEntity<?> createMultipleGroups(@RequestBody List<Group> groups)
+    {
+        try
+        {
+            List<Group> createdGroups = groupService.createMultipleGroups(groups);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdGroups);
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating groups");
         }
     }
 }

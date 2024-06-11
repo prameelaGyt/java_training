@@ -2,6 +2,7 @@ package org.example.api;
 
 import java.util.*;
 
+import jakarta.transaction.Transactional;
 import org.example.api2.Group;
 import org.example.api2.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,16 @@ public class UserService
 //        user.setName(name);
 //        return " CHanged " + user;
 //    }
-    public List<User> getAllUsers()
+    public List<Info> getAllUsers()
     {
-        return userRepository.findAll();
+        List<User> users=userRepository.findAll();
+        List<Info> userInfoSet=new ArrayList<>();
+        for(User u: users)
+        {
+            userInfoSet.add(new Info(u.getId(), u.getName()));
+        }
+        return userInfoSet;
+        //return userRepository.findAll();
     }
 
     public User createUser(User user)
@@ -49,13 +57,13 @@ public class UserService
         }
         userRepository.deleteById(String.valueOf(uid));
     }
-
+  //  @Transactional
     public User assignGroupToUser(int userId, int groupId) throws NotFoundException
     {
         User user = userRepository.findById(String.valueOf(userId)).orElseThrow(() -> new NotFoundException("User not found"));
         Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Group not found"));
-        user.getGroups().add(group);
-        group.getUsers().add(user);
+        user.getGroups().add(new Group(group.getGid(),group.getName()));
+        group.getUsers().add(new User(user.getId(), user.getName()));
         userRepository.save(user);
         return user;
     }
@@ -63,8 +71,8 @@ public class UserService
     {
         User user = userRepository.findById(String.valueOf(userId)).orElseThrow(() -> new NotFoundException("User not found"));
         Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Group not found"));
-        user.getGroups().remove(group);
-        group.getUsers().remove(user);
+        user.getGroups().remove(new Group(group.getGid(), group.getName()));
+        group.getUsers().remove(new User(user.getId(),user.getName()));
         userRepository.save(user);
         return user;
     }
@@ -78,6 +86,7 @@ public class UserService
         {
             groupInfoSet.add(new Info(g.getGid(), g.getName()));
         }
+       // return userRepository.findById(String.valueOf(userId)).orElseThrow(() -> new NotFoundException("User not found"));
         return groupInfoSet;
     }
 
@@ -90,6 +99,7 @@ public class UserService
         {
             userInfoSet.add(new Info(u.getId(), u.getName()));
         }
-        return userInfoSet;
+        //return group.getUsers();
+        return  userInfoSet;
     }
 }

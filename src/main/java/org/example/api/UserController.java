@@ -20,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers()
+    public List<Info> getAllUsers()
     {
         //hello
         return userService.getAllUsers();
@@ -62,8 +62,7 @@ public class UserController {
         try
         {
             User user = userService.assignGroupToUser(uid, gid);
-            return ResponseEntity.ok("Assigned" +
-                    "");
+            return ResponseEntity.ok("Assigned");
         }
         catch (NotFoundException e)
         {
@@ -84,11 +83,12 @@ public class UserController {
         }
     }
     @GetMapping("/{uid}/")
-    public ResponseEntity<Set<Info>> getGroupsByUserId(@PathVariable("uid") int uid)
+    public /*ResponseEntity<Set<Info>>*/ ResponseEntity<?> getGroupsByUserId(@PathVariable("uid") int uid)
     {
         try
         {
             Set<Info> groups = userService.getGroupsByUserId(uid);
+            //User user=userService.getGroupsByUserId(uid);
             return ResponseEntity.ok(groups);
         }
         catch (NotFoundException e)

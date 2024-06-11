@@ -2,6 +2,7 @@ package org.example.api;
 
 import jakarta.persistence.*;
 import org.example.api2.Group;
+import org.example.api3.Practice;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -18,7 +19,7 @@ public class User
     //@Column(name = "name")
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_group",
             joinColumns = @JoinColumn(name = "uid"),
@@ -51,6 +52,12 @@ public class User
 
     public Set<Group> getGroups()
     {
+//        Set<InfoPrac> groupSet = new HashSet<>();
+//        for (Group g : groups)
+//        {
+//            groupSet.add(new InfoPrac(g.getGid(), g.getName(),g.getPractices()));
+//        }
+//        return groupSet;
         return groups;
     }
 
