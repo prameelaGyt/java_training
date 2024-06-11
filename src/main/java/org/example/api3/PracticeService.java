@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PracticeService
@@ -17,10 +19,10 @@ public class PracticeService
     private PracticeRepository practiceRepository;
     @Autowired
     private GroupRepository groupRepository;
-    public List<Info> getAllPractices()
+    public Set<Info> getAllPractices()
     {
         List<Practice> practices=practiceRepository.findAll();
-        List<Info> practiceInfoSet=new ArrayList<>();
+        Set<Info> practiceInfoSet=new HashSet<>();
         for(Practice p: practices)
         {
             practiceInfoSet.add(new Info(p.getId(), p.getName()));
@@ -32,7 +34,7 @@ public class PracticeService
     {
         Group group=groupRepository.findById(gid).orElseThrow(()->new NotFoundException("Group not found"));
         practice.setGroup(group);
-        group.getPractices().add(new Info(practice.getId(), practice.getName()));
+        group.getPractices().add(new Practice(practice.getId(), practice.getName()));
         return practiceRepository.save(practice);
     }
 

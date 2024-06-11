@@ -20,7 +20,7 @@ public class Group
     @ManyToMany(mappedBy = "groups")
     private Set<User> users=new HashSet<>();
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private Set<Practice> practices = new HashSet<>();
 
 
@@ -51,14 +51,15 @@ public class Group
         this.gid = gid;
     }
 
-    public Set<Info> getUsers()
+    public Set<User> getUsers()
     {
-        Set<Info> userSet=new HashSet<>();
-        for(User u: users)
-        {
-            userSet.add(new Info(u.getId(),u.getName()));
-        }
-        return userSet;
+//        Set<Info> userSet=new HashSet<>();
+//        for(User u: users)
+//        {
+//            userSet.add(new Info(u.getId(),u.getName()));
+//        }
+//        return userSet;
+        return users;
     }
 
     public void setUsers(Set<User> users)
@@ -66,15 +67,15 @@ public class Group
         this.users = users;
     }
 
-    public Set<Info> getPractices()
+    public Set<Practice> getPractices()
     {
-        Set<Info> practiceSet=new HashSet<>();
-        for(Practice p: practices)
-        {
-            practiceSet.add(new Info(p.getId(),p.getName()));
-        }
-        return practiceSet;
-        //return practices;
+//        Set<Info> practiceSet=new HashSet<>();
+//        for(Practice p: practices)
+//        {
+//            practiceSet.add(new Info(p.getId(),p.getName()));
+//        }
+//        return practiceSet;
+        return practices;
     }
 
     public void setPractices(Set<Practice> practices) {

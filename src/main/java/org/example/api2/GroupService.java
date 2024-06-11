@@ -1,24 +1,29 @@
 package org.example.api2;
 
 import jakarta.transaction.Transactional;
-import org.example.api.Info;
-import org.example.api.NotFoundException;
-import org.example.api.User;
-import org.example.api.UserRepository;
+import org.example.api.*;
+import org.example.api3.PracticeRepository;
+import org.example.api3.PracticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.example.api.Info;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Service
 public class GroupService
 {
     @Autowired
     private GroupRepository groupRepository;
-    public List<Info> getAllGroups()
+
+    @Autowired
+    private PracticeService practiceService;
+    public Set<Info> getAllGroups()
     {
         List<Group> groups=groupRepository.findAll();
-        List<Info> groupInfoSet=new ArrayList<>();
+        Set<Info> groupInfoSet=new HashSet<>();
         for(Group g: groups)
         {
             groupInfoSet.add(new Info(g.getGid(), g.getName()));

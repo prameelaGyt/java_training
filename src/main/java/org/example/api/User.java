@@ -19,7 +19,7 @@ public class User
     //@Column(name = "name")
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_group",
             joinColumns = @JoinColumn(name = "uid"),
@@ -50,15 +50,15 @@ public class User
         this.name = name;
     }
 
-    public Set<InfoPrac> getGroups()
+    public Set<Group> getGroups()
     {
-        Set<InfoPrac> groupSet = new HashSet<>();
-        for (Group g : groups)
-        {
-            groupSet.add(new InfoPrac(g.getGid(), g.getName(),g.getPractices()));
-        }
-        return groupSet;
-       // return groups;
+//        Set<InfoPrac> groupSet = new HashSet<>();
+//        for (Group g : groups)
+//        {
+//            groupSet.add(new InfoPrac(g.getGid(), g.getName(),g.getPractices()));
+//        }
+//        return groupSet;
+        return groups;
     }
 
     public void setGroups(Set<Group> groups) {

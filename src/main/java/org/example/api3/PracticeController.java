@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/practices")
@@ -18,7 +19,7 @@ public class PracticeController
     @Autowired
     private PracticeService practiceService;
     @GetMapping
-    public List<Info> getAllPractice()
+    public Set<Info> getAllPractice()
     {
         return practiceService.getAllPractices();
     }

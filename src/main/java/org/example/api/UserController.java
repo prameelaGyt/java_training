@@ -62,8 +62,7 @@ public class UserController {
         try
         {
             User user = userService.assignGroupToUser(uid, gid);
-            return ResponseEntity.ok("Assigned" +
-                    "");
+            return ResponseEntity.ok("Assigned");
         }
         catch (NotFoundException e)
         {
@@ -88,9 +87,9 @@ public class UserController {
     {
         try
         {
-           // Set<Info> groups = userService.getGroupsByUserId(uid);
-            User user=userService.getGroupsByUserId(uid);
-            return ResponseEntity.ok(user);
+            Set<Info> groups = userService.getGroupsByUserId(uid);
+            //User user=userService.getGroupsByUserId(uid);
+            return ResponseEntity.ok(groups);
         }
         catch (NotFoundException e)
         {

@@ -62,8 +62,8 @@ public class UserService
     {
         User user = userRepository.findById(String.valueOf(userId)).orElseThrow(() -> new NotFoundException("User not found"));
         Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Group not found"));
-        user.getGroups().add(new InfoPrac(group.getGid(),group.getName(),group.getPractices()));
-        group.getUsers().add(new Info(user.getId(), user.getName()));
+        user.getGroups().add(new Group(group.getGid(),group.getName()));
+        group.getUsers().add(new User(user.getId(), user.getName()));
         userRepository.save(user);
         return user;
     }
@@ -71,33 +71,35 @@ public class UserService
     {
         User user = userRepository.findById(String.valueOf(userId)).orElseThrow(() -> new NotFoundException("User not found"));
         Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Group not found"));
-        user.getGroups().remove(new Info(group.getGid(), group.getName()));
-        group.getUsers().remove(new Info(user.getId(),user.getName()));
+        user.getGroups().remove(new Group(group.getGid(), group.getName()));
+        group.getUsers().remove(new User(user.getId(),user.getName()));
         userRepository.save(user);
         return user;
     }
 
-    public User getGroupsByUserId(int userId) throws NotFoundException
+    public Set<Info> getGroupsByUserId(int userId) throws NotFoundException
     {
-      //  User user = userRepository.findById(String.valueOf(userId)).orElseThrow(() -> new NotFoundException("User not found"));
-//        Set<Group> groups=user.getGroups();
-//        Set<Info> groupInfoSet=new HashSet<>();
-//        for(Group g: groups)
-//        {
-//            groupInfoSet.add(new Info(g.getGid(), g.getName()));
-//        }
-        return userRepository.findById(String.valueOf(userId)).orElseThrow(() -> new NotFoundException("User not found"));
+        User user = userRepository.findById(String.valueOf(userId)).orElseThrow(() -> new NotFoundException("User not found"));
+        Set<Group> groups=user.getGroups();
+        Set<Info> groupInfoSet=new HashSet<>();
+        for(Group g: groups)
+        {
+            groupInfoSet.add(new Info(g.getGid(), g.getName()));
+        }
+       // return userRepository.findById(String.valueOf(userId)).orElseThrow(() -> new NotFoundException("User not found"));
+        return groupInfoSet;
     }
 
     public Set<Info> getUsersByGroupId(int groupId) throws NotFoundException
     {
         Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Group not found"));
-       // Set<Info> users=group.getUsers();
-//        Set<Info> userInfoSet=new HashSet<>();
-//        for(User u:users)
-//        {
-//            userInfoSet.add(new Info(u.getId(), u.getName()));
-//        }
-        return group.getUsers();
+        Set<User> users=group.getUsers();
+        Set<Info> userInfoSet=new HashSet<>();
+        for(User u:users)
+        {
+            userInfoSet.add(new Info(u.getId(), u.getName()));
+        }
+        //return group.getUsers();
+        return  userInfoSet;
     }
 }

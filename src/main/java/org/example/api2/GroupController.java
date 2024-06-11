@@ -1,5 +1,6 @@
 package org.example.api2;
 
+import org.example.api.InfoPrac;
 import org.example.api.NotFoundException;
 import org.example.api.User;
 import org.example.api.Info;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/groups")
@@ -18,7 +20,7 @@ public class GroupController
     @Autowired
     private GroupService groupService;
     @GetMapping
-    public List<Info> getAllGroups()
+    public Set<Info> getAllGroups()
     {
         return groupService.getAllGroups();
     }

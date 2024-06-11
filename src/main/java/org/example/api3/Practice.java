@@ -18,7 +18,7 @@ public class Practice
 
     public Practice() {}
 
-    public Practice(int id, String name, Group group)
+    public Practice(int id, String name)
     {
         this.pid = id;
         this.name = name;
