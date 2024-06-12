@@ -53,12 +53,6 @@ public class Group
 
     public Set<User> getUsers()
     {
-//        Set<Info> userSet=new HashSet<>();
-//        for(User u: users)
-//        {
-//            userSet.add(new Info(u.getId(),u.getName()));
-//        }
-//        return userSet;
         return users;
     }
 
@@ -69,12 +63,6 @@ public class Group
 
     public Set<Practice> getPractices()
     {
-//        Set<Info> practiceSet=new HashSet<>();
-//        for(Practice p: practices)
-//        {
-//            practiceSet.add(new Info(p.getId(),p.getName()));
-//        }
-//        return practiceSet;
         return practices;
     }
 

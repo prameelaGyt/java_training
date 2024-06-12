@@ -18,11 +18,11 @@ public class Practice
 
     public Practice() {}
 
-    public Practice(int id, String name)
+    public Practice(int id, String  name)
     {
         this.pid = id;
         this.name = name;
-        this.group = group;
+      //  this.group = group;
     }
 
     public int getId()

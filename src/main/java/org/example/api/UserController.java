@@ -19,15 +19,35 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public List<Info> getAllUsers()
+    @GetMapping({"/{page}/{size}/{sort_by}/{direction}/{search}", "/{page}/{size}/{sort_by}/{direction}", "/{page}/{size}/{sort_by}", "/{page}/{size}", "/{page}",""})
+    public List<Info> getUsers(@PathVariable(value = "page",required = false) Integer page,@PathVariable(value="size",required=false) Integer size,@PathVariable(value="sort_by",required=false) String sort_by,@PathVariable(value = "direction",required=false) String direction,@PathVariable(value = "search",required=false) String search) throws Exception
     {
-        //hello
-        return userService.getAllUsers();
+        if (page==null)
+        {
+            page = 0;
+        }
+        if (size == null)
+        {
+            size = 4;
+        }
+        if (sort_by == null)
+        {
+            sort_by = "uid";
+        }
+        if(direction==null)
+        {
+            direction="ASC";
+        }
+//        if(direction.equals("ASC") ||direction.equals("DESC"))
+//        {
+//            direction="ASC";
+//        }
+        return userService. getUsersByPagination(page, size,sort_by,direction,search);
     }
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.createUser(user);
+    public ResponseEntity<?> createUser(@RequestBody User user) throws Exception
+    {
+        Object createdUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
     @PutMapping("/{id}")
@@ -61,7 +81,7 @@ public class UserController {
     {
         try
         {
-            User user = userService.assignGroupToUser(uid, gid);
+            userService.assignGroupToUser(uid, gid);
             return ResponseEntity.ok("Assigned");
         }
         catch (NotFoundException e)
@@ -88,7 +108,6 @@ public class UserController {
         try
         {
             Set<Info> groups = userService.getGroupsByUserId(uid);
-            //User user=userService.getGroupsByUserId(uid);
             return ResponseEntity.ok(groups);
         }
         catch (NotFoundException e)
@@ -97,7 +116,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{gid}")
+    @GetMapping("/gid/{gid}")
     public ResponseEntity<Set<Info>> getUsersByGroupId(@PathVariable("gid") int gid)
     {
         try
